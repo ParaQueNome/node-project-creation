@@ -1,0 +1,27 @@
+{
+  "name": "node_project",
+  "version": "1.0.0",
+  "description": "project-creation",
+  "homepage": "https://github.com/ParaQueNome/node_project_creation#readme",
+  "bugs": {
+    "url": "https://github.com/ParaQueNome/node_project_creation/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ParaQueNome/node_project_creation.git"
+  },
+  "license": "ISC",
+  "author": "Guilherme Afonso",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node index.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
