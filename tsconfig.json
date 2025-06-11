@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",       // ou "es2017", "esnext" dependendo do seu ambiente Node.js
+    "target": "es2020",       // ou "es2017", "esnext" dependendo do seu ambiente Node.js
     "module": "commonjs",    // ou "esnext" se você estiver usando ES modules
     "outDir": "./dist",      // Diretório de saída para os arquivos JavaScript
     "rootDir": "./src",      // Diretório raiz dos arquivos TypeScript
