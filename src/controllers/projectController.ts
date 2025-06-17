@@ -4,7 +4,6 @@ import { checkApiKey } from '../utils/checkApiKey';
 
 
 const listAllProjects = async (req : Request, res : Response)=>{
-    const apiKeyFromQuery = req.query.api_key;
     try { 
         if (!checkApiKey(req, res)) return;
         const response = await listProjects();
@@ -18,7 +17,6 @@ const listAllProjects = async (req : Request, res : Response)=>{
 
 const createProject = async (req : Request, res: Response) =>{
     const data = req.body;
-    const apiKeyFromQuery = req.query.api_key;
     try { 
         if (!checkApiKey(req, res)) return;
         if (!data || data === undefined){
