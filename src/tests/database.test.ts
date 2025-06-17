@@ -8,8 +8,8 @@ describe('Database Connection', () => {
       expect(client).toBeDefined(); 
       client.release(); 
     } catch (error) {
-      console.error('Erro ao conectar ao banco de dados:', error);
-      fail('Falha ao conectar ao banco de dados'); 
+      console.error('Connection to database failed:', error);
+      fail('Connection to database failed'); 
     }
   });
 
