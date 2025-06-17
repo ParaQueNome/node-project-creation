@@ -1,8 +1,6 @@
-
-
-const projectSchema = (data: { id: number, title: String, description: String, thumbnail: String, url: String })=>{
+const projectSchema = (data: { id?: number, title: string, description: string, thumbnail: string, url: string })=>{
     return { 
-        id: data.id,
+        id: data.id ?? undefined,
         title: data.title,
         description: data.description,
         thumbnail: data.thumbnail,

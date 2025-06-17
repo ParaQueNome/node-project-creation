@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const projectRepository_1 = __importDefault(require("../repositories/projectRepository"));
+const projectRepository_1 = require("../repositories/projectRepository");
 const database_1 = __importDefault(require("../database/database"));
 const projects_1 = __importDefault(require("../models/projects"));
 jest.mock('../database/database');
@@ -36,7 +36,7 @@ describe('listProjects', () => {
             name: row.name,
             description: row.description,
         }));
-        const projects = yield (0, projectRepository_1.default)();
+        const projects = yield (0, projectRepository_1.listProjects)();
         expect(database_1.default.query).toHaveBeenCalledWith('SELECT * FROM projects');
         expect(projects).toEqual([
             { id: 1, name: 'Project 1', description: 'Description 1' },
@@ -46,7 +46,7 @@ describe('listProjects', () => {
     }));
     it('should throw an error if the query fails', () => __awaiter(void 0, void 0, void 0, function* () {
         database_1.default.query.mockRejectedValue(new Error('Database error'));
-        yield expect((0, projectRepository_1.default)()).rejects.toThrow('Database error');
+        yield expect((0, projectRepository_1.listProjects)()).rejects.toThrow('Database error');
         expect(database_1.default.query).toHaveBeenCalledWith('SELECT * FROM projects');
     }));
 });
