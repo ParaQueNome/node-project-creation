@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import listAllProjects from '../controllers/projectController'
-import listProjects from '../repositories/projectRepository'; 
+import {listAllProjects} from '../controllers/projectController'
+import {listProjects} from '../repositories/projectRepository'; 
 import dotenv from 'dotenv';
 import pool from '../database/database';
 dotenv.config({path: '.env.local'});
