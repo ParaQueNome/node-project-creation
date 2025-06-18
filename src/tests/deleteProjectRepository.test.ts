@@ -33,19 +33,18 @@ describe('deleteProjectById', () => {
         expect(result).toEqual(mockProject);
     });
 
-    it('should throw an error if the project does not exist', async () => {
+    it('should return null if the project does not exist', async () => {
         const projectId = 999;
         mockQuery.mockResolvedValue({ rows: [] } as unknown as QueryResult);
 
-        await expect(deleteProjectById(projectId)).rejects.toThrow(
-            "The project you're trying to delete doesn't exists"
-        );
+        const result = await deleteProjectById(projectId);
+
+        expect(result).toBeNull();
         expect(mockQuery).toHaveBeenCalledWith(
             'DELETE FROM projects WHERE id = $1 RETURNING *',
             [projectId]
         );
     });
-
     it('should handle database errors', async () => {
         const projectId = 1;
         mockQuery.mockRejectedValue(new Error('Database error'));

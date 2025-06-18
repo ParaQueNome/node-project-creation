@@ -45,7 +45,7 @@ const deleteProjectById = (projectId) => __awaiter(void 0, void 0, void 0, funct
         const values = [projectId];
         const res = yield database_1.default.query(sql, values);
         if (!res.rows[0] || res.rows == undefined) {
-            throw new Error("The project you're trying to delete doesn't exists");
+            return null;
         }
         return res.rows[0];
     }

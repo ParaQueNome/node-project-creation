@@ -49,6 +49,9 @@ const deleteProject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             return res.status(400).json({ error: "Bad Request: projectId expected" });
         }
         const response = yield (0, projectRepository_1.deleteProjectById)(projectId);
+        if (response === null) {
+            return res.status(404).json({ error: "The project you're trying to delete doesn't exists" });
+        }
         return res.status(200).json(response);
     }
     catch (error) {

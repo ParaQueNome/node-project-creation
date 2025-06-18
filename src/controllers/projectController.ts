@@ -38,6 +38,9 @@ const deleteProject = async (req: Request, res: Response) => {
             return res.status(400).json({error: "Bad Request: projectId expected"});
         }
         const response = await deleteProjectById(projectId);
+        if (response === null) { 
+            return res.status(404).json({error: "The project you're trying to delete doesn't exists"});
+        }
         return res.status(200).json(response);
     } catch (error) {
         return res.status(500).json({error: `Internal server error, try it later: ${error}`});

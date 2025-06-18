@@ -28,13 +28,13 @@ const createNewProject = async (data: ProjectData): Promise<QueryResult> => {
     }
 };
 
-const deleteProjectById = async (projectId: number): Promise<QueryResult> => {
+const deleteProjectById = async (projectId: number): Promise<QueryResult | null> => {
     try { 
         const sql = `DELETE FROM projects WHERE id = $1 RETURNING *` ;
         const values = [projectId];
         const res = await pool.query(sql, values);
         if (!res.rows[0] || res.rows == undefined ) {
-            throw new Error("The project you're trying to delete doesn't exists");
+            return null;
         }
         return res.rows[0];
     } catch (error) { 
