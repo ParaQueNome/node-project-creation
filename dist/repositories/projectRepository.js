@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createNewProject = exports.listProjects = void 0;
+exports.deleteProjectById = exports.createNewProject = exports.listProjects = void 0;
 const database_1 = __importDefault(require("../database/database"));
 const projects_1 = __importDefault(require("../models/projects"));
 const listProjects = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -35,9 +35,23 @@ const createNewProject = (data) => __awaiter(void 0, void 0, void 0, function* (
         return res.rows[0];
     }
     catch (error) {
-        console.error('Error inserting into database:', error);
-        throw new Error('Database insertion failed.');
+        throw error;
     }
 });
 exports.createNewProject = createNewProject;
+const deleteProjectById = (projectId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const sql = `DELETE FROM projects WHERE id = $1 RETURNING *`;
+        const values = [projectId];
+        const res = yield database_1.default.query(sql, values);
+        if (!res.rows[0] || res.rows == undefined) {
+            return null;
+        }
+        return res.rows[0];
+    }
+    catch (error) {
+        throw error;
+    }
+});
+exports.deleteProjectById = deleteProjectById;
 //# sourceMappingURL=projectRepository.js.map
