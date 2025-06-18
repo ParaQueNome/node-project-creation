@@ -20,7 +20,6 @@ app.get('/health', (req : Request, res : Response) => {
 
 
 if (process.env.NODE_ENV !== 'production') {
-    const PORT = 3000;
     app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);
     });

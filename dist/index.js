@@ -19,7 +19,6 @@ app.get('/health', (req, res) => {
     });
 });
 if (process.env.NODE_ENV !== 'production') {
-    const PORT = 3000;
     app.listen(PORT, () => {
         console.log(`Server running on http://localhost:${PORT}`);
     });
