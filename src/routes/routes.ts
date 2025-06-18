@@ -2,12 +2,15 @@ import express, {Request, Response} from 'express';
 
 const router = express.Router();
 
-import listAllProjects from '../controllers/projectController';
+import {listAllProjects, createProject} from '../controllers/projectController';
 
-router.get('/listprojects', (req: Request, res: Response) => {
+router.get('/listProjects', (req: Request, res: Response) => {
     listAllProjects(req, res);
 });
 
+router.post('/createProject', (req: Request, res: Response) => {
+    createProject(req, res);
+});
 
 
 export default router;

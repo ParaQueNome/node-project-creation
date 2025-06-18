@@ -1,4 +1,4 @@
-import listProjects from '../repositories/projectRepository';
+import {listProjects} from '../repositories/projectRepository';
 import pool from '../database/database';
 import projectSchema from '../models/projects';
 

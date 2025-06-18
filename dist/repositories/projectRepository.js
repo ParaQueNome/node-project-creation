@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.createNewProject = exports.listProjects = void 0;
 const database_1 = __importDefault(require("../database/database"));
 const projects_1 = __importDefault(require("../models/projects"));
 const listProjects = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -24,5 +25,19 @@ const listProjects = () => __awaiter(void 0, void 0, void 0, function* () {
         throw err;
     }
 });
-exports.default = listProjects;
+exports.listProjects = listProjects;
+const createNewProject = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { title, description, thumbnail, url } = (0, projects_1.default)(data);
+        const sql = `INSERT INTO projects (title, description, thumbnail, url) VALUES ($1, $2, $3, $4) RETURNING *`;
+        const values = [title, description, thumbnail, url];
+        const res = yield database_1.default.query(sql, values);
+        return res.rows[0];
+    }
+    catch (error) {
+        console.error('Error inserting into database:', error);
+        throw new Error('Database insertion failed.');
+    }
+});
+exports.createNewProject = createNewProject;
 //# sourceMappingURL=projectRepository.js.map
