@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProject = exports.createProject = exports.listAllProjects = void 0;
+exports.updateProject = exports.deleteProject = exports.createProject = exports.listAllProjects = void 0;
 const projectRepository_1 = require("../repositories/projectRepository");
 const checkApiKey_1 = require("../utils/checkApiKey");
 const listAllProjects = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -59,4 +59,27 @@ const deleteProject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     }
 });
 exports.deleteProject = deleteProject;
+const updateProject = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const projectId = Number(req.query.id);
+    const data = req.body;
+    try {
+        if (!(0, checkApiKey_1.checkApiKey)(req, res))
+            return;
+        if (!projectId || projectId === undefined) {
+            return res.status(400).json({ error: "Bad Request: projectId expected" });
+        }
+        if (!data || data === undefined) {
+            return res.status(400).json({ error: 'Bad Request: Request Body required' });
+        }
+        const response = yield (0, projectRepository_1.updateProjectById)({ id: projectId }, data);
+        if (response === null) {
+            return res.status(404).json({ error: "The project you're trying to delete doesn't exists" });
+        }
+        return res.status(200).json(response);
+    }
+    catch (error) {
+        return res.status(500).json({ error: `Internal server error, try it later: ${error}` });
+    }
+});
+exports.updateProject = updateProject;
 //# sourceMappingURL=projectController.js.map

@@ -19,11 +19,9 @@ const createNewProject = async (data: ProjectData): Promise<QueryResult> => {
         const { title, description, thumbnail, url } = projectSchema(data);
         const sql = `INSERT INTO projects (title, description, thumbnail, url) VALUES ($1, $2, $3, $4) RETURNING *`;
         const values = [title, description, thumbnail, url];
-
         const res = await pool.query(sql, values);
         return res.rows[0]; 
     } catch (error) {
-        
         throw error;
     }
 };
@@ -42,6 +40,22 @@ const deleteProjectById = async (projectId: number): Promise<QueryResult | null>
     }
 };
 
+const updateProjectById = async (projectId: {id:number}, data: ProjectData ): Promise<QueryResult | null> =>{
+    try { 
+        const setClause = Object.keys(data).map((key, index) => `${key} = $${index +1}`).join(', ');
+        const whereClause = Object.keys(projectId).map((key, index) => `${key} = $${index +1 + Object.keys(data).length}`).join(' AND ');
+        const sql = `UPDATE projects SET ${setClause} WHERE ${whereClause} RETURNING *`;
+        const values = [...Object.values(data), ...Object.values(projectId)]
+        const res = await pool.query(sql, values);
+        if(!res.rows[0] || res.rows ==undefined) {
+            return null;
+        }
+        return res.rows[0];
+    } catch (error) { 
+        throw error;
+    }
+};
 
 
-export {listProjects, createNewProject, deleteProjectById};
+
+export {listProjects, createNewProject, deleteProjectById, updateProjectById};

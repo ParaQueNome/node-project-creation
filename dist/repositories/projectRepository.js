@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProjectById = exports.createNewProject = exports.listProjects = void 0;
+exports.updateProjectById = exports.deleteProjectById = exports.createNewProject = exports.listProjects = void 0;
 const database_1 = __importDefault(require("../database/database"));
 const projects_1 = __importDefault(require("../models/projects"));
 const listProjects = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -54,4 +54,21 @@ const deleteProjectById = (projectId) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.deleteProjectById = deleteProjectById;
+const updateProjectById = (projectId, data) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const setClause = Object.keys(data).map((key, index) => `${key} = $${index + 1}`).join(', ');
+        const whereClause = Object.keys(projectId).map((key, index) => `${key} = $${index + 1 + Object.keys(data).length}`).join(' AND ');
+        const sql = `UPDATE projects SET ${setClause} WHERE ${whereClause} RETURNING *`;
+        const values = [...Object.values(data), ...Object.values(projectId)];
+        const res = yield database_1.default.query(sql, values);
+        if (!res.rows[0] || res.rows == undefined) {
+            return null;
+        }
+        return res.rows[0];
+    }
+    catch (error) {
+        throw error;
+    }
+});
+exports.updateProjectById = updateProjectById;
 //# sourceMappingURL=projectRepository.js.map
