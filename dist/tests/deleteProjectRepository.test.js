@@ -33,10 +33,11 @@ describe('deleteProjectById', () => {
         expect(mockQuery).toHaveBeenCalledWith('DELETE FROM projects WHERE id = $1 RETURNING *', [projectId]);
         expect(result).toEqual(mockProject);
     }));
-    it('should throw an error if the project does not exist', () => __awaiter(void 0, void 0, void 0, function* () {
+    it('should return null if the project does not exist', () => __awaiter(void 0, void 0, void 0, function* () {
         const projectId = 999;
         mockQuery.mockResolvedValue({ rows: [] });
-        yield expect((0, projectRepository_1.deleteProjectById)(projectId)).rejects.toThrow("The project you're trying to delete doesn't exists");
+        const result = yield (0, projectRepository_1.deleteProjectById)(projectId);
+        expect(result).toBeNull();
         expect(mockQuery).toHaveBeenCalledWith('DELETE FROM projects WHERE id = $1 RETURNING *', [projectId]);
     }));
     it('should handle database errors', () => __awaiter(void 0, void 0, void 0, function* () {
