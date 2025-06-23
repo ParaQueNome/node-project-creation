@@ -15,5 +15,8 @@ router.post('/createProject', (req, res) => {
 router.delete('/deleteProject', (req, res) => {
     (0, projectController_1.deleteProject)(req, res);
 });
+router.put('/updateProject', (req, res) => {
+    (0, projectController_1.updateProject)(req, res);
+});
 exports.default = router;
 //# sourceMappingURL=routes.js.map
