@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import {listProjects, createNewProject, deleteProjectById, updateProjectById} from '../repositories/projectRepository';
 import { checkApiKey } from '../utils/checkApiKey';
+import checkProjectId from '../utils/checkProjectId';
+import checkBodyRequest from '../utils/checkBodyRequest';
+
 
 
 const listAllProjects = async (req : Request, res : Response)=>{
@@ -19,9 +22,7 @@ const createProject = async (req : Request, res: Response) =>{
     const data = req.body;
     try { 
         if (!checkApiKey(req, res)) return;
-        if (!data || data === undefined){
-            return res.status(400).json({error: 'Bad Request: Request Body required'});
-        }
+        if (!checkBodyRequest(data, req, res)) return;
         const response = await createNewProject(data);
         return res.status(200).json(response);
     } catch (error) {
@@ -33,9 +34,7 @@ const deleteProject = async (req: Request, res: Response) => {
     const projectId = Number(req.query.id);
     try {
         if (!checkApiKey(req, res)) return;
-        if (!projectId || projectId === undefined) {
-            return res.status(400).json({error: "Bad Request: projectId expected"});
-        }
+        if (!checkProjectId(projectId, req, res)) return;
         const response = await deleteProjectById(projectId);
         if (response === null) { 
             return res.status(404).json({error: "The project you're trying to delete doesn't exists"});
@@ -51,12 +50,8 @@ const updateProject = async (req: Request, res: Response) => {
     const data = req.body;
     try { 
         if(!checkApiKey(req, res)) return;
-        if(!projectId || projectId === undefined ) {
-            return res.status(400).json({error: "Bad Request: projectId expected"});
-        }
-        if (!data || data === undefined){
-            return res.status(400).json({error: 'Bad Request: Request Body required'});
-        }
+        if (!checkProjectId(projectId, req, res)) return;
+        if (!checkBodyRequest(data, req, res)) return;
         const response = await updateProjectById({id: projectId}, data)
         if (response === null) { 
             return res.status(404).json({error: "The project you're trying to update doesn't exists"});
