@@ -1,6 +1,6 @@
 
 
-const skillsSchema = (data: {id: number, title: string, rate: number }) => { 
+const skillsSchema = (data: {id?: number, title: string, rate: number }) => { 
     return { 
         id: data.id,
         title: data.title,

@@ -22,5 +22,8 @@ router.put('/updateProject', (req, res) => {
 router.get('/listSkills', (req, res) => {
     (0, skillsController_1.listAllSkills)(req, res);
 });
+router.post('/addSkill', (req, res) => {
+    (0, skillsController_1.addSkill)(req, res);
+});
 exports.default = router;
 //# sourceMappingURL=routes.js.map

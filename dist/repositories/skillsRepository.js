@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.listSkills = void 0;
+exports.addNewSkill = exports.listSkills = void 0;
 const database_1 = __importDefault(require("../database/database"));
 const skills_1 = __importDefault(require("../models/skills"));
 const listSkills = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -26,4 +26,17 @@ const listSkills = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.listSkills = listSkills;
+const addNewSkill = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { title, rate } = (0, skills_1.default)(data);
+        const sql = `INSERT INTO skills (title, rate) VALUES ($1, $2) RETURNING *`;
+        const values = [title, rate];
+        const res = yield database_1.default.query(sql, values);
+        return res.rows[0];
+    }
+    catch (error) {
+        throw error;
+    }
+});
+exports.addNewSkill = addNewSkill;
 //# sourceMappingURL=skillsRepository.js.map
