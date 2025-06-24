@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { addSkill } from '../controllers/skillsController'; 
-import { addNewSkill } from '../repositories/skillsRepository';
+import { createSkill } from '../controllers/skillsController'; 
+import { createNewSkill } from '../repositories/skillsRepository';
 import { checkApiKey } from '../utils/checkApiKey';
 import checkBodyRequest from '../utils/checkBodyRequest';
 
@@ -32,7 +32,7 @@ describe('addSkill Controller', () => {
     (checkApiKey as jest.Mock).mockReturnValue(true);
     (checkBodyRequest as jest.Mock).mockReturnValue(true);
 
-    await addSkill(mockRequest as Request, mockResponse as Response);
+    await createSkill(mockRequest as Request, mockResponse as Response);
 
     expect(mockResponse.status).toHaveBeenCalledWith(400);
     expect(responseJson).toEqual({ error: 'Bad request: rate must be a number beetween 1-10' });
@@ -45,7 +45,7 @@ describe('addSkill Controller', () => {
       return false;
     });
 
-    await addSkill(mockRequest as Request, mockResponse as Response);
+    await createSkill(mockRequest as Request, mockResponse as Response);
 
     expect(checkApiKey).toHaveBeenCalledWith(mockRequest, mockResponse);
     expect(mockResponse.status).toHaveBeenCalledWith(403);
@@ -59,11 +59,11 @@ describe('addSkill Controller', () => {
 
     (checkApiKey as jest.Mock).mockReturnValue(true);
     (checkBodyRequest as jest.Mock).mockReturnValue(true);
-    (addNewSkill as jest.Mock).mockResolvedValue(skillData);
+    (createNewSkill as jest.Mock).mockResolvedValue(skillData);
 
-    await addSkill(mockRequest as Request, mockResponse as Response);
+    await createSkill(mockRequest as Request, mockResponse as Response);
 
-    expect(addNewSkill).toHaveBeenCalledWith(skillData);
+    expect(createNewSkill).toHaveBeenCalledWith(skillData);
     expect(mockResponse.status).toHaveBeenCalledWith(200);
     expect(responseJson).toEqual(skillData);
   });
@@ -74,9 +74,9 @@ describe('addSkill Controller', () => {
 
     (checkApiKey as jest.Mock).mockReturnValue(true);
     (checkBodyRequest as jest.Mock).mockReturnValue(true);
-    (addNewSkill as jest.Mock).mockRejectedValue(new Error('Database error'));
+    (createNewSkill as jest.Mock).mockRejectedValue(new Error('Database error'));
 
-    await addSkill(mockRequest as Request, mockResponse as Response);
+    await createSkill(mockRequest as Request, mockResponse as Response);
 
     expect(mockResponse.status).toHaveBeenCalledWith(500);
     expect(responseJson.error).toContain('Internal server error, try it later');

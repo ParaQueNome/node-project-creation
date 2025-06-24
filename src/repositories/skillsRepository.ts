@@ -14,7 +14,7 @@ const listSkills = async (): Promise<SkillData[]> => {
     }
 };
 
-const addNewSkill = async (data: SkillData): Promise<QueryResult> => {
+const createNewSkill = async (data: SkillData): Promise<QueryResult> => {
     try {
         const { title, rate} = skillsSchema(data);
         const sql = `INSERT INTO skills (title, rate) VALUES ($1, $2) RETURNING *`;
@@ -28,4 +28,4 @@ const addNewSkill = async (data: SkillData): Promise<QueryResult> => {
 
 
 
-export {listSkills, addNewSkill};
+export {listSkills, createNewSkill};

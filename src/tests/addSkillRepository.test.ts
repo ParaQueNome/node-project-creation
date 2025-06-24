@@ -1,4 +1,4 @@
-import { addNewSkill } from '../repositories/skillsRepository';
+import { createNewSkill } from '../repositories/skillsRepository';
 import pool from '../database/database';
 import skillsSchema from '../models/skills';
 import { QueryResult } from 'pg';
@@ -30,7 +30,7 @@ describe('Skills Repository', () => {
     
     (pool.query as jest.Mock).mockResolvedValue(mockQueryResult);
 
-    const result = await addNewSkill(mockSkillData);
+    const result = await createNewSkill(mockSkillData);
 
     expect(skillsSchema).toHaveBeenCalledWith(mockSkillData);
 
@@ -48,14 +48,14 @@ describe('Skills Repository', () => {
   test('should throw an error if the database insertion fails', async () => {
     (pool.query as jest.Mock).mockRejectedValue(new Error('Database error'));
 
-    await expect(addNewSkill(mockSkillData)).rejects.toThrow('Database error');
+    await expect(createNewSkill(mockSkillData)).rejects.toThrow('Database error');
   });
 
   test('should use the correct SQL query format', async () => {
     const mockQueryResult = { rows: [mockSkillData] } as QueryResult;
     (pool.query as jest.Mock).mockResolvedValue(mockQueryResult);
     
-    await addNewSkill(mockSkillData);
+    await createNewSkill(mockSkillData);
     
     const sqlQuery = (pool.query as jest.Mock).mock.calls[0][0];
     expect(sqlQuery).toBe('INSERT INTO skills (title, rate) VALUES ($1, $2) RETURNING *');

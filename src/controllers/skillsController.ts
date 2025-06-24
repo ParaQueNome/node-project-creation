@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { listSkills, addNewSkill } from '../repositories/skillsRepository';
+import { listSkills, createNewSkill } from '../repositories/skillsRepository';
 import { checkApiKey } from '../utils/checkApiKey';
 import checkBodyRequest from '../utils/checkBodyRequest';
 
@@ -14,7 +14,7 @@ const listAllSkills = async (req: Request, res: Response) => {
     }
 
 };
-const addSkill = async (req : Request, res: Response) =>{
+const createSkill = async (req : Request, res: Response) =>{
     const data = req.body;
     try { 
         if (!checkApiKey(req, res)) return;
@@ -22,7 +22,7 @@ const addSkill = async (req : Request, res: Response) =>{
         if (data.rate > 10 || data.rate < 1) {
             return res.status(400).json({error: 'Bad request: rate must be a number beetween 1-10'});
         }
-        const response = await addNewSkill(data);
+        const response = await createNewSkill(data);
         return res.status(200).json(response);
     } catch (error) {
         return res.status(500).json({error: `Internal server error, try it later: ${error}`});
@@ -30,4 +30,4 @@ const addSkill = async (req : Request, res: Response) =>{
 }
 
 
-export { listAllSkills, addSkill};
+export { listAllSkills, createSkill};
