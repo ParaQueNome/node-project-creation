@@ -26,6 +26,20 @@ const createNewSkill = async (data: SkillData): Promise<QueryResult> => {
     }
 };
 
+const deleteSkillById = async (projectId: number): Promise<QueryResult | null> => {
+    try { 
+        const sql = `DELETE FROM skills WHERE id = $1 RETURNING *` ;
+        const values = [projectId];
+        const res = await pool.query(sql, values);
+        if (!res.rows[0] || res.rows == undefined ) {
+            return null;
+        }
+        return res.rows[0];
+    } catch (error) { 
+        throw error;
+    }
+};
 
 
-export {listSkills, createNewSkill};
+
+export {listSkills, createNewSkill, deleteSkillById};

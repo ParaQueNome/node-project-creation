@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addNewSkill = exports.listSkills = void 0;
+exports.deleteSkillById = exports.createNewSkill = exports.listSkills = void 0;
 const database_1 = __importDefault(require("../database/database"));
 const skills_1 = __importDefault(require("../models/skills"));
 const listSkills = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -26,7 +26,7 @@ const listSkills = () => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.listSkills = listSkills;
-const addNewSkill = (data) => __awaiter(void 0, void 0, void 0, function* () {
+const createNewSkill = (data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { title, rate } = (0, skills_1.default)(data);
         const sql = `INSERT INTO skills (title, rate) VALUES ($1, $2) RETURNING *`;
@@ -38,5 +38,20 @@ const addNewSkill = (data) => __awaiter(void 0, void 0, void 0, function* () {
         throw error;
     }
 });
-exports.addNewSkill = addNewSkill;
+exports.createNewSkill = createNewSkill;
+const deleteSkillById = (projectId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const sql = `DELETE FROM skills WHERE id = $1 RETURNING *`;
+        const values = [projectId];
+        const res = yield database_1.default.query(sql, values);
+        if (!res.rows[0] || res.rows == undefined) {
+            return null;
+        }
+        return res.rows[0];
+    }
+    catch (error) {
+        throw error;
+    }
+});
+exports.deleteSkillById = deleteSkillById;
 //# sourceMappingURL=skillsRepository.js.map
