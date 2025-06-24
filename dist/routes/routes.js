@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const router = express_1.default.Router();
 const projectController_1 = require("../controllers/projectController");
+const skillsController_1 = require("../controllers/skillsController");
 router.get('/listProjects', (req, res) => {
     (0, projectController_1.listAllProjects)(req, res);
 });
@@ -17,6 +18,9 @@ router.delete('/deleteProject', (req, res) => {
 });
 router.put('/updateProject', (req, res) => {
     (0, projectController_1.updateProject)(req, res);
+});
+router.get('/listSkills', (req, res) => {
+    (0, skillsController_1.listAllSkills)(req, res);
 });
 exports.default = router;
 //# sourceMappingURL=routes.js.map
