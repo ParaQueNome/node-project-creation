@@ -25,7 +25,7 @@ router.get('/listSkills', (req: Request, res: Response) => {
     listAllSkills(req, res);
 });
 
-router.post('/addSkill', (req: Request, res: Response) => {
+router.post('/createSkill', (req: Request, res: Response) => {
     addSkill(req, res);
 });
 
