@@ -12,9 +12,20 @@ const listSkills = async (): Promise<SkillData[]> => {
     } catch (err) {
         throw err; 
     }
-}
+};
+
+const createNewSkill = async (data: SkillData): Promise<QueryResult> => {
+    try {
+        const { title, rate} = skillsSchema(data);
+        const sql = `INSERT INTO skills (title, rate) VALUES ($1, $2) RETURNING *`;
+        const values = [title, rate];
+        const res = await pool.query(sql, values);
+        return res.rows[0]; 
+    } catch (error) {
+        throw error;
+    }
+};
 
 
 
-
-export { listSkills};
+export {listSkills, createNewSkill};
