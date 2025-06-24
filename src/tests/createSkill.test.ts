@@ -8,7 +8,7 @@ jest.mock('../repositories/skillsRepository');
 jest.mock('../utils/checkApiKey');
 jest.mock('../utils/checkBodyRequest');
 
-describe('addSkill Controller', () => {
+describe('createSkill Controller', () => {
   let mockRequest: Partial<Request>;
   let mockResponse: Partial<Response>;
   let responseJson: any;
