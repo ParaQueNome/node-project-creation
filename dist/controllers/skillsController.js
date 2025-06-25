@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteSkill = exports.createSkill = exports.listAllSkills = void 0;
+exports.updateSkill = exports.deleteSkill = exports.createSkill = exports.listAllSkills = void 0;
 const skillsRepository_1 = require("../repositories/skillsRepository");
 const checkApiKey_1 = require("../utils/checkApiKey");
 const checkBodyRequest_1 = __importDefault(require("../utils/checkBodyRequest"));
@@ -65,4 +65,25 @@ const deleteSkill = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
 });
 exports.deleteSkill = deleteSkill;
+const updateSkill = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const skillId = Number(req.query.id);
+    const data = req.body;
+    try {
+        if (!(0, checkApiKey_1.checkApiKey)(req, res))
+            return;
+        if (!(0, checkId_1.default)(skillId, req, res))
+            return;
+        if (!(0, checkBodyRequest_1.default)(data, req, res))
+            return;
+        const response = yield (0, skillsRepository_1.updateSkillById)({ id: skillId }, data);
+        if (response === null) {
+            return res.status(404).json({ error: "The skill you're trying to update doesn't exists" });
+        }
+        return res.status(200).json(response);
+    }
+    catch (error) {
+        return res.status(500).json({ error: `Internal server error, try it later: ${error}` });
+    }
+});
+exports.updateSkill = updateSkill;
 //# sourceMappingURL=skillsController.js.map

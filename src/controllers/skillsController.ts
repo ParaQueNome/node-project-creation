@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { listSkills, createNewSkill, deleteSkillById } from '../repositories/skillsRepository';
+import { listSkills, createNewSkill, deleteSkillById, updateSkillById } from '../repositories/skillsRepository';
 import { checkApiKey } from '../utils/checkApiKey';
 import checkBodyRequest from '../utils/checkBodyRequest';
 import checkId from '../utils/checkId';
@@ -45,4 +45,22 @@ const deleteSkill = async (req: Request, res: Response) => {
     }
 }
 
-export { listAllSkills, createSkill, deleteSkill};
+const updateSkill = async (req: Request, res: Response) => { 
+    const skillId = Number(req.query.id);
+    const data = req.body;
+    try { 
+        if(!checkApiKey(req, res)) return;
+        if (!checkId(skillId, req, res)) return;
+        if (!checkBodyRequest(data, req, res)) return;
+        const response = await updateSkillById({id: skillId}, data)
+        if (response === null) { 
+            return res.status(404).json({error: "The skill you're trying to update doesn't exists"});
+        }
+        return res.status(200).json(response);
+    } catch (error) { 
+        return res.status(500).json({error: `Internal server error, try it later: ${error}`});
+    }
+}
+
+
+export { listAllSkills, createSkill, deleteSkill, updateSkill};

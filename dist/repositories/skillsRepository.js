@@ -39,10 +39,10 @@ const createNewSkill = (data) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.createNewSkill = createNewSkill;
-const deleteSkillById = (projectId) => __awaiter(void 0, void 0, void 0, function* () {
+const deleteSkillById = (skillId) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sql = `DELETE FROM skills WHERE id = $1 RETURNING *`;
-        const values = [projectId];
+        const values = [skillId];
         const res = yield database_1.default.query(sql, values);
         if (!res.rows[0] || res.rows == undefined) {
             return null;
@@ -54,12 +54,12 @@ const deleteSkillById = (projectId) => __awaiter(void 0, void 0, void 0, functio
     }
 });
 exports.deleteSkillById = deleteSkillById;
-const updateSkillById = (projectId, data) => __awaiter(void 0, void 0, void 0, function* () {
+const updateSkillById = (skillId, data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const setClause = Object.keys(data).map((key, index) => `${key} = $${index + 1}`).join(', ');
-        const whereClause = Object.keys(projectId).map((key, index) => `${key} = $${index + 1 + Object.keys(data).length}`).join(' AND ');
-        const sql = `UPDATE projects SET ${setClause} WHERE ${whereClause} RETURNING *`;
-        const values = [...Object.values(data), ...Object.values(projectId)];
+        const whereClause = Object.keys(skillId).map((key, index) => `${key} = $${index + 1 + Object.keys(data).length}`).join(' AND ');
+        const sql = `UPDATE skills SET ${setClause} WHERE ${whereClause} RETURNING *`;
+        const values = [...Object.values(data), ...Object.values(skillId)];
         const res = yield database_1.default.query(sql, values);
         if (!res.rows[0] || res.rows == undefined) {
             return null;
