@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateProject = exports.deleteProject = exports.createProject = exports.listAllProjects = void 0;
 const projectRepository_1 = require("../repositories/projectRepository");
 const checkApiKey_1 = require("../utils/checkApiKey");
-const checkProjectId_1 = __importDefault(require("../utils/checkProjectId"));
 const checkBodyRequest_1 = __importDefault(require("../utils/checkBodyRequest"));
+const checkId_1 = __importDefault(require("../utils/checkId"));
 const listAllProjects = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!(0, checkApiKey_1.checkApiKey)(req, res))
@@ -49,7 +49,7 @@ const deleteProject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         if (!(0, checkApiKey_1.checkApiKey)(req, res))
             return;
-        if (!(0, checkProjectId_1.default)(projectId, req, res))
+        if (!(0, checkId_1.default)(projectId, req, res))
             return;
         const response = yield (0, projectRepository_1.deleteProjectById)(projectId);
         if (response === null) {
@@ -68,7 +68,7 @@ const updateProject = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         if (!(0, checkApiKey_1.checkApiKey)(req, res))
             return;
-        if (!(0, checkProjectId_1.default)(projectId, req, res))
+        if (!(0, checkId_1.default)(projectId, req, res))
             return;
         if (!(0, checkBodyRequest_1.default)(data, req, res))
             return;

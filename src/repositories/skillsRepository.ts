@@ -26,6 +26,36 @@ const createNewSkill = async (data: SkillData): Promise<QueryResult> => {
     }
 };
 
+const deleteSkillById = async (projectId: number): Promise<QueryResult | null> => {
+    try { 
+        const sql = `DELETE FROM skills WHERE id = $1 RETURNING *` ;
+        const values = [projectId];
+        const res = await pool.query(sql, values);
+        if (!res.rows[0] || res.rows == undefined ) {
+            return null;
+        }
+        return res.rows[0];
+    } catch (error) { 
+        throw error;
+    }
+};
+
+const updateSkillById = async (projectId: {id:number}, data: SkillData ): Promise<QueryResult | null> =>{
+    try { 
+        const setClause = Object.keys(data).map((key, index) => `${key} = $${index +1}`).join(', ');
+        const whereClause = Object.keys(projectId).map((key, index) => `${key} = $${index +1 + Object.keys(data).length}`).join(' AND ');
+        const sql = `UPDATE projects SET ${setClause} WHERE ${whereClause} RETURNING *`;
+        const values = [...Object.values(data), ...Object.values(projectId)]
+        const res = await pool.query(sql, values);
+        if(!res.rows[0] || res.rows ==undefined) {
+            return null;
+        }
+        return res.rows[0];
+    } catch (error) { 
+        throw error;
+    }
+};
 
 
-export {listSkills, createNewSkill};
+
+export {listSkills, createNewSkill, deleteSkillById, updateSkillById};

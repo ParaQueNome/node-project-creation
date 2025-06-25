@@ -35,7 +35,7 @@ describe('createSkill Controller', () => {
     await createSkill(mockRequest as Request, mockResponse as Response);
 
     expect(mockResponse.status).toHaveBeenCalledWith(400);
-    expect(responseJson).toEqual({ error: 'Bad request: rate must be a number beetween 1-10' });
+    expect(responseJson).toEqual({ error: 'Bad request: rate must be a number between 1-10' });
   });
 
   it('should return 403 if API key is invalid', async () => {
