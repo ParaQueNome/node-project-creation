@@ -46,15 +46,15 @@ const deleteSkill = async (req: Request, res: Response) => {
 }
 
 const updateSkill = async (req: Request, res: Response) => { 
-    const projectId = Number(req.query.id);
+    const skillId = Number(req.query.id);
     const data = req.body;
     try { 
         if(!checkApiKey(req, res)) return;
-        if (!checkProjectId(projectId, req, res)) return;
+        if (!checkId(skillId, req, res)) return;
         if (!checkBodyRequest(data, req, res)) return;
-        const response = await updateSkillById({id: projectId}, data)
+        const response = await updateSkillById({id: skillId}, data)
         if (response === null) { 
-            return res.status(404).json({error: "The project you're trying to update doesn't exists"});
+            return res.status(404).json({error: "The skill you're trying to update doesn't exists"});
         }
         return res.status(200).json(response);
     } catch (error) { 
@@ -63,4 +63,4 @@ const updateSkill = async (req: Request, res: Response) => {
 }
 
 
-export { listAllSkills, createSkill, deleteSkill};
+export { listAllSkills, createSkill, deleteSkill, updateSkill};

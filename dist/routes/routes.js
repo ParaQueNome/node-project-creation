@@ -28,5 +28,8 @@ router.post('/createSkill', (req, res) => {
 router.delete('/deleteSkill', (req, res) => {
     (0, skillsController_1.deleteSkill)(req, res);
 });
+router.put('/updateSkill', (req, res) => {
+    (0, skillsController_1.updateSkill)(req, res);
+});
 exports.default = router;
 //# sourceMappingURL=routes.js.map

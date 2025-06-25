@@ -44,7 +44,7 @@ const updateSkillById = async (skillId: {id:number}, data: SkillData ): Promise<
     try { 
         const setClause = Object.keys(data).map((key, index) => `${key} = $${index +1}`).join(', ');
         const whereClause = Object.keys(skillId).map((key, index) => `${key} = $${index +1 + Object.keys(data).length}`).join(' AND ');
-        const sql = `UPDATE projects SET ${setClause} WHERE ${whereClause} RETURNING *`;
+        const sql = `UPDATE skills SET ${setClause} WHERE ${whereClause} RETURNING *`;
         const values = [...Object.values(data), ...Object.values(skillId)]
         const res = await pool.query(sql, values);
         if(!res.rows[0] || res.rows ==undefined) {
