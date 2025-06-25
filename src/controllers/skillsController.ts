@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { listSkills, createNewSkill, deleteSkillById, updateSkillById } from '../repositories/skillsRepository';
 import { checkApiKey } from '../utils/checkApiKey';
 import checkBodyRequest from '../utils/checkBodyRequest';
-import checkProjectId from '../utils/checkProjectId';
+import checkId from '../utils/checkId';
 
 
 const listAllSkills = async (req: Request, res: Response) => { 
@@ -31,11 +31,11 @@ const createSkill = async (req : Request, res: Response) =>{
 }
 
 const deleteSkill = async (req: Request, res: Response) => {
-    const projectId = Number(req.query.id);
+    const skillId = Number(req.query.id);
     try {
         if (!checkApiKey(req, res)) return;
-        if (!checkProjectId(projectId, req, res)) return;
-        const response = await deleteSkillById(projectId);
+        if (!checkId(skillId, req, res)) return;
+        const response = await deleteSkillById(skillId);
         if (response === null) { 
             return res.status(404).json({error: "The skill you're trying to delete doesn't exists"});
         }

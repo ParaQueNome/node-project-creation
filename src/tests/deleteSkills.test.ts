@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { deleteSkill } from '../controllers/skillsController'; 
 import * as skillsRepository from '../repositories/skillsRepository'; 
 import * as checkApiKeyModule from '../utils/checkApiKey'; 
-import * as checkProjectIdModule from '../utils/checkProjectId'; 
+import * as checkProjectIdModule from '../utils/checkId'; 
 
 jest.mock('../repositories/skillsRepository');
 jest.mock('../utils/checkApiKey');

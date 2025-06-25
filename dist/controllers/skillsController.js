@@ -16,7 +16,7 @@ exports.deleteSkill = exports.createSkill = exports.listAllSkills = void 0;
 const skillsRepository_1 = require("../repositories/skillsRepository");
 const checkApiKey_1 = require("../utils/checkApiKey");
 const checkBodyRequest_1 = __importDefault(require("../utils/checkBodyRequest"));
-const checkProjectId_1 = __importDefault(require("../utils/checkProjectId"));
+const checkId_1 = __importDefault(require("../utils/checkId"));
 const listAllSkills = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!(0, checkApiKey_1.checkApiKey)(req, res))
@@ -48,13 +48,13 @@ const createSkill = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.createSkill = createSkill;
 const deleteSkill = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const projectId = Number(req.query.id);
+    const skillId = Number(req.query.id);
     try {
         if (!(0, checkApiKey_1.checkApiKey)(req, res))
             return;
-        if (!(0, checkProjectId_1.default)(projectId, req, res))
+        if (!(0, checkId_1.default)(skillId, req, res))
             return;
-        const response = yield (0, skillsRepository_1.deleteSkillById)(projectId);
+        const response = yield (0, skillsRepository_1.deleteSkillById)(skillId);
         if (response === null) {
             return res.status(404).json({ error: "The skill you're trying to delete doesn't exists" });
         }

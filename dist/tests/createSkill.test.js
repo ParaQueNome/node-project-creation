@@ -41,7 +41,7 @@ describe('createSkill Controller', () => {
         checkBodyRequest_1.default.mockReturnValue(true);
         yield (0, skillsController_1.createSkill)(mockRequest, mockResponse);
         expect(mockResponse.status).toHaveBeenCalledWith(400);
-        expect(responseJson).toEqual({ error: 'Bad request: rate must be a number beetween 1-10' });
+        expect(responseJson).toEqual({ error: 'Bad request: rate must be a number between 1-10' });
     }));
     it('should return 403 if API key is invalid', () => __awaiter(void 0, void 0, void 0, function* () {
         mockRequest.query = { api_key: 'wrong_key' };
