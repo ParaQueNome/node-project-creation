@@ -6,7 +6,7 @@ import * as checkProjectIdModule from '../utils/checkId';
 
 jest.mock('../repositories/skillsRepository');
 jest.mock('../utils/checkApiKey');
-jest.mock('../utils/checkProjectId');
+jest.mock('../utils/checkId');
 
 describe('deleteSkill Controller', () => {
     let mockRequest: Partial<Request>;

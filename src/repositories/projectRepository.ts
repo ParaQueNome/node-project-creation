@@ -57,5 +57,4 @@ const updateProjectById = async (projectId: {id:number}, data: ProjectData ): Pr
 };
 
 
-
 export {listProjects, createNewProject, deleteProjectById, updateProjectById};
