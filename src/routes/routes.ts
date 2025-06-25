@@ -3,7 +3,7 @@ import express, {Request, Response} from 'express';
 const router = express.Router();
 
 import {listAllProjects, createProject, deleteProject, updateProject} from '../controllers/projectController';
-import { listAllSkills, createSkill} from '../controllers/skillsController';
+import { listAllSkills, createSkill, deleteSkill} from '../controllers/skillsController';
 
 router.get('/listProjects', (req: Request, res: Response) => {
     listAllProjects(req, res);
@@ -29,5 +29,8 @@ router.post('/createSkill', (req: Request, res: Response) => {
     createSkill(req, res);
 });
 
+router.delete('/deleteSkill', (req: Request, res: Response) => { 
+    deleteSkill(req, res);
+});
 export default router;
 
