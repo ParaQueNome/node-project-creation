@@ -26,10 +26,10 @@ const createNewSkill = async (data: SkillData): Promise<QueryResult> => {
     }
 };
 
-const deleteSkillById = async (projectId: number): Promise<QueryResult | null> => {
+const deleteSkillById = async (skillId: number): Promise<QueryResult | null> => {
     try { 
         const sql = `DELETE FROM skills WHERE id = $1 RETURNING *` ;
-        const values = [projectId];
+        const values = [skillId];
         const res = await pool.query(sql, values);
         if (!res.rows[0] || res.rows == undefined ) {
             return null;
@@ -40,6 +40,22 @@ const deleteSkillById = async (projectId: number): Promise<QueryResult | null> =
     }
 };
 
+const updateSkillById = async (skillId: {id:number}, data: SkillData ): Promise<QueryResult | null> =>{
+    try { 
+        const setClause = Object.keys(data).map((key, index) => `${key} = $${index +1}`).join(', ');
+        const whereClause = Object.keys(skillId).map((key, index) => `${key} = $${index +1 + Object.keys(data).length}`).join(' AND ');
+        const sql = `UPDATE projects SET ${setClause} WHERE ${whereClause} RETURNING *`;
+        const values = [...Object.values(data), ...Object.values(skillId)]
+        const res = await pool.query(sql, values);
+        if(!res.rows[0] || res.rows ==undefined) {
+            return null;
+        }
+        return res.rows[0];
+    } catch (error) { 
+        throw error;
+    }
+};
 
 
-export {listSkills, createNewSkill, deleteSkillById};
+
+export {listSkills, createNewSkill, deleteSkillById, updateSkillById};
